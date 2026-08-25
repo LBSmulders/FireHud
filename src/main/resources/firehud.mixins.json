@@ -11,6 +11,7 @@
     "EntityRenderStateMixin",
     "FireBlockMixin",
     "HudMixin",
+    "LavaFogEnvironmentMixin",
     "ScreenEffectRendererMixin",
     "OptionsScreenMixin"
   ],

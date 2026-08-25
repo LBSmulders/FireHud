@@ -54,6 +54,10 @@
   "text.autoconfig.firehud.option.renderFireInLava": "岩浆中火焰渲染",
   "text.autoconfig.firehud.option.renderThirdPersonFireInLava.@Tooltip": "开关站在岩浆中时第三人称视角下玩家模型上的火焰渲染",
   "text.autoconfig.firehud.option.renderThirdPersonFireInLava": "岩浆中第三人称火焰渲染",
+  "text.autoconfig.firehud.option.renderLavaFog.@Tooltip": "开关岩浆中迷雾的渲染，VANILLA 保留原版迷雾，LIGHT_FOG 将迷雾拉远到 LightFog 模式视距，NO_FOG 完全移除迷雾",
+  "text.autoconfig.firehud.option.renderLavaFog": "渲染岩浆迷雾",
+  "text.autoconfig.firehud.option.lightFogDist.@Tooltip": "当迷雾渲染模式为 LIGHT_FOG 时在岩浆中的可视距离。范围：0 - 100，采用指数刻度，因为岩浆池中没有足够远的景物让线性刻度的高段产生区别。0 的浓度接近原版，50 约为十格，100 约为一百格",
+  "text.autoconfig.firehud.option.lightFogDist": "LightFog模式视距",
   
   "text.autoconfig.firehud.option.renderWithFireResistance.@PrefixText": "抗火药水效果",
   "text.autoconfig.firehud.option.renderWithFireResistance.@Tooltip": "开关在抗火药水效果下的火焰UI渲染",

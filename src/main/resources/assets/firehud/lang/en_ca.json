@@ -54,6 +54,10 @@
   "text.autoconfig.firehud.option.renderFireInLava": "Render Fire In Lava",
   "text.autoconfig.firehud.option.renderThirdPersonFireInLava.@Tooltip": "Toggles rendering fire on your own player model in third person while standing in lava",
   "text.autoconfig.firehud.option.renderThirdPersonFireInLava": "Third Person Fire In Lava",
+  "text.autoconfig.firehud.option.renderLavaFog.@Tooltip": "Toggles rendering the fog effect when in lava, making it easier to see. VANILLA leaves the game's own lava fog alone, LIGHT_FOG stretches it out to Light Fog Distance, and NO_FOG removes it entirely",
+  "text.autoconfig.firehud.option.renderLavaFog": "Render Lava Fog",
+  "text.autoconfig.firehud.option.lightFogDist.@Tooltip": "How far you can see in lava with Render Lava Fog set to LIGHT_FOG. Range: 0 - 100, on an exponential scale because a lava pool never has anything far enough away for the top of a linear one to make a difference. 0 is about as thick as vanilla, 50 reaches ten blocks, 100 reaches a hundred",
+  "text.autoconfig.firehud.option.lightFogDist": "Light Fog Distance",
   
   "text.autoconfig.firehud.option.thermometer.@PrefixText": "Thermometer",
   "text.autoconfig.firehud.option.thermometer.@Tooltip": "Displays a rough estimate of how long you will be on fire. This may not always be accurate",

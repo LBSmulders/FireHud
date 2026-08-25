@@ -65,6 +65,12 @@ public class FireHudConfig implements ConfigData {
     public boolean renderFireInLava = true;
     @ConfigEntry.Gui.Tooltip
     public boolean renderThirdPersonFireInLava = true;
+    @ConfigEntry.Gui.Tooltip
+    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    public LavaFogOptions renderLavaFog = LavaFogOptions.VANILLA;
+    @ConfigEntry.Gui.Tooltip
+    @ConfigEntry.BoundedDiscrete(max = 100)
+    public int lightFogDist = 50;
     
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip
@@ -96,4 +102,5 @@ public class FireHudConfig implements ConfigData {
     
     
     public enum VignetteOptions { OFF, FULL, UPPER, LOWER }
+    public enum LavaFogOptions { VANILLA, LIGHT_FOG, NO_FOG }
 }
