@@ -5,21 +5,19 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.enderkitty.FireHud;
-import net.enderkitty.SoulFireEntityAccessor;
+import net.enderkitty.SoulFireHolder;
+import net.enderkitty.SoulFireSprites;
 import net.enderkitty.config.FireHudConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
-import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.util.ARGB;
-import net.minecraft.world.effect.MobEffects;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,8 +29,9 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ScreenEffectRenderer.class)
 public class ScreenEffectRendererMixin {
     @Shadow @Final private SpriteGetter sprites;
-    @Unique private static final FireHudConfig config = FireHud.getConfig();
-    @Unique private static final SpriteId SOUL_FIRE_1 = Sheets.BLOCKS_MAPPER.defaultNamespaceApply("soul_fire_1");
+    // Yaw and roll of the "side fire" pair, in radians; 0.17453292f is vanilla's own 10 degree yaw
+    @Unique private static final float SIDE_YAW = (float) Math.toRadians(70.0);
+    @Unique private static final float SIDE_ROLL = (float) Math.toRadians(10.0);
 
     /**
      * 26.2 builds the whole first person fire overlay inside one {@code submitCustomGeometry} lambda, with the
@@ -42,16 +41,12 @@ public class ScreenEffectRendererMixin {
      */
     @WrapOperation(method = "submit", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;submitFire(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V"))
     private void fireHud$submitFire(PoseStack poseStack, SubmitNodeCollector collector, TextureAtlasSprite sprite, Operation<Void> original) {
+        FireHudConfig config = FireHud.getConfig();
         LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || !config.renderVanillaHud || FireHud.suppressed(player, config.renderFireInLava)) return;
 
-        boolean suppressed = player == null
-                || (!config.renderFireInLava && player.isInLava())
-                || (!config.renderWithFireResistance && player.hasEffect(MobEffects.FIRE_RESISTANCE));
-
-        if (suppressed || !config.renderVanillaHud) return;
-
-        TextureAtlasSprite fireSprite = config.renderSoulFire && ((SoulFireEntityAccessor) player).fireHud$isOnSoulFire()
-                ? this.sprites.get(SOUL_FIRE_1)
+        TextureAtlasSprite fireSprite = config.renderSoulFire && ((SoulFireHolder) player).fireHud$isOnSoulFire()
+                ? this.sprites.get(SoulFireSprites.FIRE_1)
                 : sprite;
 
         float yPos = -1.0f + config.firePos;
@@ -62,15 +57,11 @@ public class ScreenEffectRendererMixin {
             Matrix4f pose = new Matrix4f();
 
             for (int r = 0; r < 2; r++) {
+                float side = r * 2 - 1;
                 pose.set(basePose.pose());
-                if (sideFire) {
-                    pose.translate(-(r * 2 - 1) * 0.24f, yPos, -0.2f);
-                    pose.rotateY((float) Math.toRadians((r * 2 - 1) * 70.0f));
-                    pose.rotateZ((float) Math.toRadians(r == 1 ? -10.0f : 10.0f));
-                } else {
-                    pose.translate(-(r * 2 - 1) * 0.24f, yPos, 0.0f);
-                    pose.rotateY((r * 2 - 1) * 0.17453292f);
-                }
+                pose.translate(-side * 0.24f, yPos, sideFire ? -0.2f : 0.0f);
+                pose.rotateY(side * (sideFire ? SIDE_YAW : 0.17453292f));
+                if (sideFire) pose.rotateZ(-side * SIDE_ROLL);
                 fireHud$buildFireQuad(builder, pose, fireSprite, fireColor);
             }
         });

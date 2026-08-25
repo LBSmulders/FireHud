@@ -2,7 +2,7 @@ package net.enderkitty.mixin;
 
 import net.enderkitty.ClientFireTick;
 import net.enderkitty.FireHud;
-import net.enderkitty.SoulFireEntityAccessor;
+import net.enderkitty.SoulFireHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.player.LocalPlayer;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(Entity.class)
-public abstract class ClientEntityMixin implements SoulFireEntityAccessor {
+public abstract class ClientEntityMixin implements SoulFireHolder {
     @Shadow public abstract boolean fireImmune();
 
     @Unique private boolean soulFire;
@@ -35,18 +35,17 @@ public abstract class ClientEntityMixin implements SoulFireEntityAccessor {
     
     @Inject(method = "lavaIgnite", at = @At(value = "HEAD"))
     private void lavaIgnite(CallbackInfo ci) {
-        Entity thisObject = (Entity) (Object) this;
-        if (FireHud.getConfig().thermometer && thisObject instanceof LocalPlayer player && !this.fireImmune()) {
+        if (FireHud.getConfig().thermometer && (Object) this instanceof LocalPlayer player && !this.fireImmune()) {
             ((ClientFireTick) player).fireHud$setClientFireFor(15.0f);
         }
     }
     @Inject(method = "thunderHit", at = @At(value = "HEAD"))
     private void thunderHit(ServerLevel level, LightningBolt lightningBolt, CallbackInfo ci) {
-        Entity thisObject = (Entity) (Object) this;
-        if (FireHud.getConfig().thermometer && thisObject instanceof LocalPlayer player) {
-            ((ClientFireTick) player).fireHud$setClientFireTick(((ClientFireTick) player).fireHud$clientFireTick() + 1);
-            if (((ClientFireTick) player).fireHud$clientFireTick() == 0) {
-                ((ClientFireTick) player).fireHud$setClientFireFor(8.0f);
+        if (FireHud.getConfig().thermometer && (Object) this instanceof LocalPlayer player) {
+            ClientFireTick fire = (ClientFireTick) player;
+            fire.fireHud$setClientFireTick(fire.fireHud$clientFireTick() + 1);
+            if (fire.fireHud$clientFireTick() == 0) {
+                fire.fireHud$setClientFireFor(8.0f);
             }
         }
     }

@@ -54,8 +54,10 @@ public abstract class OptionsScreenMixin extends Screen {
             adder.addChild(SpacerElement.width(config.configButtonX), 1);
             adder.addChild(SpacerElement.height(config.configButtonY), 2);
             
+            // Only the grid: vanilla's own init already registered every header and footer widget, and
+            // Screen#addRenderableWidget does not deduplicate
             this.layout.addToContents(gridLayout);
-            this.layout.visitWidgets(this::addRenderableWidget);
+            gridLayout.visitWidgets(this::addRenderableWidget);
             this.repositionElements();
         }
     }

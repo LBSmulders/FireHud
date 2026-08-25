@@ -1,7 +1,6 @@
 package net.enderkitty.mixin;
 
-import net.enderkitty.SoulFireEntityAccessor;
-import net.enderkitty.SoulFireRenderStateAccessor;
+import net.enderkitty.SoulFireHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -18,6 +17,7 @@ public class EntityRendererMixin<T extends Entity, S extends EntityRenderState> 
     
     @Inject(method = "extractRenderState", at = @At(value = "TAIL"))
     private void soulFireRenderState(T entity, S state, float partialTicks, CallbackInfo ci) {
-        ((SoulFireRenderStateAccessor) state).fireHud$setOnSoulFire(((SoulFireEntityAccessor) entity).fireHud$isOnSoulFire() && !entity.isSpectator());
+        ((SoulFireHolder) state).fireHud$setOnSoulFire(
+                ((SoulFireHolder) entity).fireHud$isOnSoulFire() && !entity.isSpectator());
     }
 }

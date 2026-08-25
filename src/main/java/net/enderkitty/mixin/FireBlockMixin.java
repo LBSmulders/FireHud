@@ -40,16 +40,14 @@ public class FireBlockMixin {
     @Inject(method = "fireIgnite", at = @At(value = "HEAD"))
     private static void fireIgnite(Entity entity, CallbackInfo ci) {
         if (FireHud.getConfig().thermometer && !entity.fireImmune() && entity instanceof LocalPlayer player) {
-            int clientFireTick = ((ClientFireTick) player).fireHud$clientFireTick();
-            if (clientFireTick < 0) {
-                ((ClientFireTick) player).fireHud$setClientFireTick(clientFireTick + 1);
-            } else {
-                int i = entity.level().getRandom().nextInt(2, 3);
-                ((ClientFireTick) player).fireHud$setClientFireTick(clientFireTick + i);
-            }
+            ClientFireTick fire = (ClientFireTick) player;
+            int clientFireTick = fire.fireHud$clientFireTick();
 
-            if (clientFireTick >= 0) {
-                ((ClientFireTick) player).fireHud$setClientFireFor(8.0f);
+            if (clientFireTick < 0) {
+                fire.fireHud$setClientFireTick(clientFireTick + 1);
+            } else {
+                fire.fireHud$setClientFireTick(clientFireTick + entity.level().getRandom().nextInt(2, 3));
+                fire.fireHud$setClientFireFor(8.0f);
             }
         }
     }
