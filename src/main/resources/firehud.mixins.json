@@ -1,21 +1,23 @@
 {
   "required": true,
   "package": "net.enderkitty.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_25",
   "client": [
     "ClientEntityMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayNetworkHandlerMixin",
-    "FireCommandRendererMixin",
+    "FlameFeatureRendererMixin",
     "EntityRendererMixin",
     "EntityRenderStateMixin",
     "FireBlockMixin",
-    "InGameHudMixin",
-    "InGameOverlayRendererMixin",
-    "LavaFogModifierMixin",
+    "HudMixin",
+    "ScreenEffectRendererMixin",
     "OptionsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
   }
 }

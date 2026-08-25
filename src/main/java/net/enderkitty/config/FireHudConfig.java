@@ -9,15 +9,20 @@ public class FireHudConfig implements ConfigData {
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip
     public boolean renderVanillaHud = true;
+    @ConfigEntry.Gui.Tooltip
     public float fireOpacity = 0.9f;
+    @ConfigEntry.Gui.Tooltip
     public float firePos = 0.7f;
     @ConfigEntry.Gui.Tooltip
     public boolean sideFire = false;
+    @ConfigEntry.Gui.Tooltip
     public boolean renderThirdPersonFire = true;
+    @ConfigEntry.Gui.Tooltip
     public float fireVolume = 1.0f;
     @ConfigEntry.Gui.Tooltip
     public boolean applyFireVolRand = true;
-    public float firePitch = 0.3f;
+    @ConfigEntry.Gui.Tooltip
+    public float firePitch = 0.5f;
     @ConfigEntry.Gui.Tooltip
     public boolean applyFirePitchRand = true;
     
@@ -25,6 +30,7 @@ public class FireHudConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public VignetteOptions fireVignette = VignetteOptions.OFF;
+    @ConfigEntry.Gui.Tooltip
     public float vignetteOpacity = 1.0f;
     @ConfigEntry.Gui.Tooltip
     @ConfigEntry.BoundedDiscrete(max = 4)
@@ -57,13 +63,17 @@ public class FireHudConfig implements ConfigData {
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip
     public boolean renderFireInLava = true;
+    @ConfigEntry.Gui.Tooltip
     public boolean renderThirdPersonFireInLava = true;
     
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.Tooltip
     public boolean thermometer = false;
+    @ConfigEntry.Gui.Tooltip
     public boolean onlyShowWhenOnFire = true;
+    @ConfigEntry.Gui.Tooltip
     public boolean showFireTicks = false;
+    @ConfigEntry.Gui.Tooltip
     public boolean onLeftSide = false;
     
     @ConfigEntry.Gui.PrefixText
@@ -77,8 +87,11 @@ public class FireHudConfig implements ConfigData {
     public int renderWithTimeLeft = 0;
     
     @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.Gui.Tooltip
     public boolean configButtonInSettings = true;
+    @ConfigEntry.Gui.Tooltip
     public int configButtonX = 328;
+    @ConfigEntry.Gui.Tooltip
     public int configButtonY = 44;
     
     

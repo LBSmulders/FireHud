@@ -3,13 +3,13 @@ package net.enderkitty.mixin;
 import net.enderkitty.ClientFireTick;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Environment(EnvType.CLIENT)
-@Mixin(ClientPlayerEntity.class)
+@Mixin(LocalPlayer.class)
 public class ClientPlayerEntityMixin implements ClientFireTick {
     @Unique private int clientFireTick = 0;
 
@@ -25,7 +25,7 @@ public class ClientPlayerEntityMixin implements ClientFireTick {
 
     @Override
     public void fireHud$setClientFireFor(float seconds) {
-        int ticks = MathHelper.floor(seconds * 20);
+        int ticks = Mth.floor(seconds * 20);
         if (fireHud$clientFireTick() < ticks) {
             fireHud$setClientFireTick(ticks);
         }
