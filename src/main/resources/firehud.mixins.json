@@ -3,9 +3,9 @@
   "package": "net.enderkitty.mixin",
   "compatibilityLevel": "JAVA_25",
   "client": [
-    "ClientEntityMixin",
-    "ClientPlayerEntityMixin",
-    "ClientPlayNetworkHandlerMixin",
+    "EntityMixin",
+    "LocalPlayerMixin",
+    "ClientPacketListenerMixin",
     "FlameFeatureRendererMixin",
     "EntityRendererMixin",
     "EntityRenderStateMixin",

@@ -43,15 +43,22 @@ public class ScreenEffectRendererMixin {
     private void fireHud$submitFire(PoseStack poseStack, SubmitNodeCollector collector, TextureAtlasSprite sprite, Operation<Void> original) {
         FireHudConfig config = FireHud.getConfig();
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null || !config.renderVanillaHud || FireHud.suppressed(player, config.renderFireInLava)) return;
+        if (player == null || FireHud.suppressed(player, config.renderFireInLava)) return;
 
         TextureAtlasSprite fireSprite = config.renderSoulFire && ((SoulFireHolder) player).fireHud$isOnSoulFire()
                 ? this.sprites.get(SoulFireSprites.FIRE_1)
                 : sprite;
 
+        if (config.renderVanillaHud) fireHud$submitCustomGeometry(poseStack, collector, fireSprite, false);
+        if (config.sideFire) fireHud$submitCustomGeometry(poseStack, collector, fireSprite, true);
+    }
+
+    @Unique
+    private static void fireHud$submitCustomGeometry(PoseStack poseStack, SubmitNodeCollector collector, TextureAtlasSprite fireSprite, boolean sideFire) {
+        FireHudConfig config = FireHud.getConfig();
+
         float yPos = -1.0f + config.firePos;
         int fireColor = ARGB.white(config.fireOpacity);
-        boolean sideFire = config.sideFire;
 
         collector.submitCustomGeometry(poseStack, RenderTypes.fireScreenEffect(fireSprite.atlasLocation()), (basePose, builder) -> {
             Matrix4f pose = new Matrix4f();

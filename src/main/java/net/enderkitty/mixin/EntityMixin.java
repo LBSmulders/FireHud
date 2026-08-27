@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(Entity.class)
-public abstract class ClientEntityMixin implements SoulFireHolder {
+public abstract class EntityMixin implements SoulFireHolder {
     @Shadow public abstract boolean fireImmune();
 
     @Unique private boolean soulFire;

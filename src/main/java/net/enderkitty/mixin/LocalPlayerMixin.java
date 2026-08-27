@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Environment(EnvType.CLIENT)
 @Mixin(LocalPlayer.class)
-public class ClientPlayerEntityMixin implements ClientFireTick {
+public class LocalPlayerMixin implements ClientFireTick {
     @Unique private int clientFireTick = 0;
 
     @Override
